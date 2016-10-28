@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FragmentTabHost/FragmentTabHost.iml" filepath="$PROJECT_DIR$/FragmentTabHost/FragmentTabHost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HttpUtils/HttpUtils.iml" filepath="$PROJECT_DIR$/HttpUtils/HttpUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ListViewAdapter/ListViewAdapter.iml" filepath="$PROJECT_DIR$/ListViewAdapter/ListViewAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LuxShareAPP.iml" filepath="$PROJECT_DIR$/LuxShareAPP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RecylerViewAdapter/RecylerViewAdapter.iml" filepath="$PROJECT_DIR$/RecylerViewAdapter/RecylerViewAdapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test/Test.iml" filepath="$PROJECT_DIR$/Test/Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToolBarUtils/ToolBarUtils.iml" filepath="$PROJECT_DIR$/ToolBarUtils/ToolBarUtils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/底部导航栏/app.iml" filepath="$PROJECT_DIR$/底部导航栏/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ListViewAdapter/baseadapter.iml" filepath="$PROJECT_DIR$/ListViewAdapter/baseadapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Test/nohttp.iml" filepath="$PROJECT_DIR$/Test/nohttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HttpUtils/textokhttp.iml" filepath="$PROJECT_DIR$/HttpUtils/textokhttp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FragmentTabHost/底部导航栏.iml" filepath="$PROJECT_DIR$/FragmentTabHost/底部导航栏.iml" />
+    </modules>
+  </component>
+</project>
