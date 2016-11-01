@@ -1,1 +1,1 @@
-include ':FragmentTabHost', ':Test', ':HttpUtils', ':ListViewAdapter', ':RecylerViewAdapter', ':Utils', ':ToolBarUtils'
+include ':FragmentTabHost', ':Test', ':HttpUtils', ':ListViewAdapter', ':RecylerViewAdapter', ':Utils', ':ToolBarUtils', ':TestScrollView'
