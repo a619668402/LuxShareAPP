@@ -1,8 +1,10 @@
 package com.luxshare.testscrollview;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.ImageView;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements GradationScrollVi
     private ImageView mIv;
     private TextView mtv;
     private int mHeight;
+    private TextView mClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements GradationScrollVi
         mScrollView = ((GradationScrollView) findViewById(R.id.scrollview));
         mIv = ((ImageView) findViewById(R.id.imageview));
         mtv = ((TextView) findViewById(R.id.textview));
+        mClick = ((TextView) findViewById(R.id.one));
+
+        mClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Main2Activity.class));
+            }
+        });
 
         mIv.setFocusable(true);
         mIv.setFocusableInTouchMode(true);
