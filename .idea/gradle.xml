@@ -3,8 +3,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="D:\Program Files\Android\Android Studio\gradle\gradle-2.14.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -13,24 +14,14 @@
             <option value="$PROJECT_DIR$/ListViewAdapter" />
             <option value="$PROJECT_DIR$/RecylerViewAdapter" />
             <option value="$PROJECT_DIR$/Test" />
+            <option value="$PROJECT_DIR$/TestEmptyView" />
+            <option value="$PROJECT_DIR$/TestPopList" />
             <option value="$PROJECT_DIR$/TestScrollView" />
             <option value="$PROJECT_DIR$/ToolBarUtils" />
             <option value="$PROJECT_DIR$/Utils" />
           </set>
         </option>
-        <option name="myModules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/FragmentTabHost" />
-            <option value="$PROJECT_DIR$/HttpUtils" />
-            <option value="$PROJECT_DIR$/ListViewAdapter" />
-            <option value="$PROJECT_DIR$/RecylerViewAdapter" />
-            <option value="$PROJECT_DIR$/Test" />
-            <option value="$PROJECT_DIR$/TestScrollView" />
-            <option value="$PROJECT_DIR$/ToolBarUtils" />
-            <option value="$PROJECT_DIR$/Utils" />
-          </set>
-        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

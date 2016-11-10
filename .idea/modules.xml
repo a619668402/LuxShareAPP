@@ -8,6 +8,8 @@
       <module fileurl="file://$PROJECT_DIR$/LuxShareAPP.iml" filepath="$PROJECT_DIR$/LuxShareAPP.iml" />
       <module fileurl="file://$PROJECT_DIR$/RecylerViewAdapter/RecylerViewAdapter.iml" filepath="$PROJECT_DIR$/RecylerViewAdapter/RecylerViewAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/Test/Test.iml" filepath="$PROJECT_DIR$/Test/Test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestEmptyView/TestEmptyView.iml" filepath="$PROJECT_DIR$/TestEmptyView/TestEmptyView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestPopList/TestPopList.iml" filepath="$PROJECT_DIR$/TestPopList/TestPopList.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestScrollView/TestScrollView.iml" filepath="$PROJECT_DIR$/TestScrollView/TestScrollView.iml" />
       <module fileurl="file://$PROJECT_DIR$/ToolBarUtils/ToolBarUtils.iml" filepath="$PROJECT_DIR$/ToolBarUtils/ToolBarUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/Utils/Utils.iml" filepath="$PROJECT_DIR$/Utils/Utils.iml" />

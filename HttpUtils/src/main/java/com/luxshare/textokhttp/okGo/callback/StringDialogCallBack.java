@@ -36,7 +36,6 @@ public abstract class StringDialogCallBack extends StringCallback {
     public void onAfter(@Nullable String s, @Nullable Exception e) {
         super.onAfter(s, e);
 
-
         //网络请求结束后关闭对话框
         if (mLoading != null && mLoading.isShowing()) {
             mLoading.dismiss();
