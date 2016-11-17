@@ -98,8 +98,8 @@ public class SPUtils {
         return sp.getString(key, defValue);
     }
 
-    public static String getString(Context context, String key, String defValue) {
-        return getString(context, context.getPackageName(), key, defValue);
+    public static String getString(Context context, String name, String key) {
+        return getString(context, name, key, DEFAULT_STR_VALUE);
     }
 
     public static String getString(Context context, String key) {
@@ -140,6 +140,10 @@ public class SPUtils {
     public static int getInt(Context context, String name, String key, int defValue) {
         SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
         return sp.getInt(key, defValue);
+    }
+
+    public static int getInt(Context context, String name, String key) {
+        return getInt(context, name, key, DEFAULT_INT_VALUE);
     }
 
     public static int getInt(Context context, String key, int defValue) {
@@ -186,6 +190,11 @@ public class SPUtils {
         return sp.getBoolean(key, defValue);
     }
 
+    public static boolean getBoolean(Context context, String name, String key) {
+        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
+        return sp.getBoolean(key, DEFAULT_BOOL_VALUE);
+    }
+
     public static boolean getBoolean(Context context, String key, boolean defValue) {
         return getBoolean(context, context.getPackageName(), key, defValue);
     }
@@ -230,6 +239,10 @@ public class SPUtils {
         return sp.getFloat(key, defValue);
     }
 
+    public static float getFloat(Context context, String name, String key) {
+        return getFloat(context, name, key, DEFAULT_FLOAT_VALUE);
+    }
+
     public static float getFloat(Context context, String key, float defValue) {
         return getFloat(context, context.getPackageName(), key, defValue);
     }
@@ -272,6 +285,10 @@ public class SPUtils {
     public static long getLong(Context context, String name, String key, long defValue) {
         SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
         return sp.getLong(key, defValue);
+    }
+
+    public static long getLong(Context context, String name, String key) {
+        return getLong(context, name, key, DEFAULT_LONG_VALUE);
     }
 
     public static long getLong(Context context, String key, long defValue) {
