@@ -1,7 +1,9 @@
 package com.luxshare.textokhttp.okGo.callback;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.view.Window;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.lzy.okgo.callback.StringCallback;
@@ -12,10 +14,15 @@ import com.lzy.okgo.request.BaseRequest;
  */
 public abstract class StringDialogCallBack extends StringCallback {
 
-    private SVProgressHUD mLoading;
+    private ProgressDialog mDialog;
 
     private void initLoading(Context context) {
-        mLoading = new SVProgressHUD(context);
+        mDialog = new ProgressDialog(context);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mDialog.setMessage("正在加载...");
+
     }
 
     public StringDialogCallBack(Context context) {
@@ -27,8 +34,8 @@ public abstract class StringDialogCallBack extends StringCallback {
         super.onBefore(request);
 
         //网络请求结束后显示对话框
-        if (mLoading != null && !mLoading.isShowing()) {
-            mLoading.showWithStatus("请求网络中...");
+        if (mDialog != null && !mDialog.isShowing()) {
+            mDialog.show();
         }
     }
 
@@ -37,8 +44,8 @@ public abstract class StringDialogCallBack extends StringCallback {
         super.onAfter(s, e);
 
         //网络请求结束后关闭对话框
-        if (mLoading != null && mLoading.isShowing()) {
-            mLoading.dismiss();
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
         }
     }
 }
