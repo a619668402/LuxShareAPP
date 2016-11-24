@@ -154,7 +154,6 @@ public class SystemUtils {
      * 判断程序是处于前台还是在后台运行
      *
      * @param context 上下文
-     * @return true 为后台运行，false 为前台运行
      */
     public static boolean isBackground(Context context) {
 
@@ -201,6 +200,7 @@ public class SystemUtils {
      * 6.0以上需要加入
      * <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
      * <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+     *
      * @return MAC地址
      */
     public static String getMac() {
@@ -249,4 +249,26 @@ public class SystemUtils {
         }
         return builder.toString();
     }
+
+    /**
+     * 判断应用是否已经启动
+     *
+     * @param context     一个context
+     * @param packageName 要判断应用的包名
+     * @return boolean
+     */
+    public static boolean isAppAlive(Context context, String packageName) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
+        for (int i = 0; i < processInfos.size(); i++) {
+            if (processInfos.get(i).processName.equals(packageName)) {
+                Log.i(TAG, "isAppAlive: " + String.format("the %s is running, isAppAlive return true", packageName));
+                return true;
+            }
+        }
+        Log.i(TAG, "isAppAlive: " + String.format("the %s is not running, isAppAlive return false", packageName));
+        return false;
+    }
+
+
 }
