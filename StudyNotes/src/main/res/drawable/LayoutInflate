@@ -1,0 +1,13 @@
+LayoutInflater的使用中重点关注inflate方法的参数含义：
+
+inflate(xmlId, null); 只创建temp的View，然后直接返回temp。
+
+inflate(xmlId, parent); 创建temp的View，然后执行root.addView(temp, params);最后返回root。
+
+inflate(xmlId, parent, false); 创建temp的View，然后执行temp.setLayoutParams(params);然后再返回temp。
+
+inflate(xmlId, parent, true); 创建temp的View，然后执行root.addView(temp, params);最后返回root。
+
+inflate(xmlId, null, false); 只创建temp的View，然后直接返回temp。
+
+inflate(xmlId, null, true); 只创建temp的View，然后直接返回temp。

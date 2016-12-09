@@ -1,0 +1,35 @@
+如果是23之前的版本编译的APP,则权限模型走的是老模式,也就是一条龙模式,在manifest清单注册,系统会帮我们默认授权,并且也能运行.
+如果是以API23的版本编译的APP,那走的必须是新的权限模型,在遇到dangerous权限的时候,必须进行授权,如果没有进行授权,系统则会提示崩溃信息,所以,基于6.0系统开发的程序,在打开页面的时候,必须要考虑这个页面时候是否要用到需要授权的权限,页面检测是否已经授权过了没.
+
+授权机制:
+如果已经申请了某个危险的权限,假设你的APP早已被用户授权了同一组的某个危险权限,那么系统会立即授权,而不需要用户点击授权,比如:你的APP对READ_CONTACTS已经授权了,当你的APP申请WRITE_CONTACTS时,系统会直接授权通过.此外,对于申请时弹出的dialog上面的文字说明也是对整个权限组的说明,而不是单个权限.(ps:这个dialog是不能进行定制的)
+
+
+
+
+步骤:
+1.在AndroidManifest文件中添加需要的权限
+2.检查权限
+if (ContextCompat.checkSelfPermission(this, Manifest.permission_group.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+} else {}
+
+ContextCompat.checkSelfPermission用于检查某个权限是否已经被授予,方法返回值为PackageManager.PERMISSION_GRANTED或者PackageManager.PERMISSION_DENIED,当返回DENIED就需要进行申请授权
+3.申请授权
+ActivityCompat.requestPermissions(this,new String[]{Manifest.permission_group.CAMERA},MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+该方法是异步的,第一个参数是Context,第二个参数是需要申请的权限的字符串数组,第三个参数为requestCode,主要用于回调的时候检测,可以从方法名requestPermissions以及第二个参数看出,是支持一次性申请多个权限的,系统会通过对话框逐一询问用户是否授权.
+4.处理权限申请回调
+ @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+
+                }
+                break;
+        }
+    }
+对于权限申请的结果,首先验证requestCode定位到你的申请,然后验证grantResults对应于申请的结果,这里的数组对应于申请的第二个权限字符串数组,如果你同事申请两个权限,那么grantResults的length就为2,分别记录你两个权限的申请结果,如果申请成功,就可以做你的事.
+
