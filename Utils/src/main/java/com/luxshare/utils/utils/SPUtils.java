@@ -2,7 +2,12 @@ package com.luxshare.utils.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.SharedPreferencesCompat;
+import android.util.Log;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 /**
@@ -11,308 +16,145 @@ import java.util.Map;
  */
 public class SPUtils {
 
-    public static String DEFAULT_STR_VALUE = "null";
-    public static int DEFAULT_INT_VALUE = Integer.MIN_VALUE;
-    public static boolean DEFAULT_BOOL_VALUE = Boolean.FALSE;
-    public static float DEFAULT_FLOAT_VALUE = Float.MIN_VALUE;
-    public static long DEFAULT_LONG_VALUE = Long.MIN_VALUE;
+    /**
+     * 保存在手机里面的文件名
+     */
+    public static final String FILE_NAME = "share_data";
 
-    private SPUtils() {
-        throw new AssertionError();
-    }
-
-
-    public static SharedPreferences getSP(Context context, String name, int mode) {
-        SharedPreferences sp = context.getSharedPreferences(name, mode);
-        return sp;
-    }
 
     /**
-     * 保存多条数据
+     * 保存数据的方法,我们需要拿到保存数据的具体类型,然后根据类型调用不同的保存方法
      *
      * @param context
-     * @param name
-     * @param map     保存数据的集合
-     * @return
+     * @param key
+     * @param object
      */
-    public static boolean putMap(Context context, String name, Map<String, Object> map) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-
-            if (entry.getValue() instanceof String) {
-                editor.putString(entry.getKey(), (String) entry.getValue());
-            } else if (entry.getValue() instanceof Integer) {
-                editor.putInt(entry.getKey(), (Integer) entry.getValue());
-            } else if (entry.getValue() instanceof Boolean) {
-                editor.putBoolean(entry.getKey(), (Boolean) entry.getValue());
-            } else if (entry.getValue() instanceof Float) {
-                editor.putFloat(entry.getKey(), (Float) entry.getValue());
-            } else if (entry.getValue() instanceof Long) {
-                editor.putLong(entry.getKey(), (Long) entry.getValue());
-            }
+    public static void put(Context context, String key, Object object) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (object instanceof String) {
+            editor.putString(key, ((String) object));
+        } else if (object instanceof Integer) {
+            editor.putInt(key, ((Integer) object));
+        } else if (object instanceof Boolean) {
+            editor.putBoolean(key, ((Boolean) object));
+        } else if (object instanceof Float) {
+            editor.putFloat(key, ((Float) object));
+        } else if (object instanceof Long) {
+            editor.putLong(key, ((Long) object));
+        } else {
+            editor.putString(key, ((String) object));
         }
-        return editor.commit();
+        SharedPreferenceCompat.apply(editor);
     }
 
     /**
-     * @param context
-     * @param map
-     * @return
-     */
-    public static boolean putMap(Context context, Map<String, Object> map) {
-        return putMap(context, context.getPackageName(), map);
-    }
-
-    /**
-     * 保存string类型数据
+     * 获取保存数据的方法,根据默认值得到数据类型,调用对应的方法获取值
      *
      * @param context
-     * @param key     存储的键
-     * @param value   存储的值
+     * @param key
+     * @param defObject
      * @return
      */
-    public static boolean putString(Context context, String name, String key, String value) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(key, value);
-        return editor.commit();
-    }
-
-    public static boolean putString(Context context, String key, String value) {
-        return putString(context, context.getPackageName(), key, value);
-    }
-
-
-    /**
-     * 获取string类型值
-     *
-     * @param context  上下文对象
-     * @param name
-     * @param key
-     * @param defValue 默认值
-     * @return key对应的value
-     */
-    public static String getString(Context context, String name, String key, String defValue) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getString(key, defValue);
-    }
-
-    public static String getString(Context context, String name, String key) {
-        return getString(context, name, key, DEFAULT_STR_VALUE);
-    }
-
-    public static String getString(Context context, String key) {
-        return getString(context, context.getPackageName(), key, DEFAULT_STR_VALUE);
+    public static Object get(Context context, String key, Object defObject) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        if (defObject instanceof String) {
+            return sharedPreferences.getString(key, ((String) defObject));
+        } else if (defObject instanceof Integer) {
+            return sharedPreferences.getInt(key, ((Integer) defObject));
+        } else if (defObject instanceof Boolean) {
+            return sharedPreferences.getBoolean(key, ((Boolean) defObject));
+        } else if (defObject instanceof Float) {
+            return sharedPreferences.getFloat(key, ((Float) defObject));
+        } else if (defObject instanceof Long) {
+            return sharedPreferences.getLong(key, ((Long) defObject));
+        }
+        return null;
     }
 
 
     /**
-     * 保存int类型数据
+     * 移除某个key对应的值
      *
      * @param context
-     * @param name
      * @param key
-     * @param value
-     * @return
      */
-    public static boolean putInt(Context context, String name, String key, int value) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt(key, value);
-        return editor.commit();
-    }
-
-    public static boolean putInt(Context context, String key, int value) {
-        return putInt(context, context.getPackageName(), key, value);
+    public static void remove(Context context, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        SharedPreferenceCompat.apply(editor);
     }
 
 
     /**
-     * 获取int类型值
-     *
-     * @param context  上下文对象
-     * @param name
-     * @param key
-     * @param defValue 默认值
-     * @return key对应的value
-     */
-    public static int getInt(Context context, String name, String key, int defValue) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getInt(key, defValue);
-    }
-
-    public static int getInt(Context context, String name, String key) {
-        return getInt(context, name, key, DEFAULT_INT_VALUE);
-    }
-
-    public static int getInt(Context context, String key, int defValue) {
-        return getInt(context, context.getPackageName(), key, defValue);
-    }
-
-    public static int getInt(Context context, String key) {
-        return getInt(context, context.getPackageName(), key, DEFAULT_INT_VALUE);
-    }
-
-
-    /**
-     * 保存boolean类型数据
+     * 清除所有的数据
      *
      * @param context
-     * @param name
-     * @param key
-     * @param value
-     * @return
      */
-    public static boolean putBoolean(Context context, String name, String key, boolean value) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(key, value);
-        return editor.commit();
-    }
-
-    public static boolean putBoolean(Context context, String key, boolean value) {
-        return putBoolean(context, context.getPackageName(), key, value);
+    public static void clear(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        SharedPreferenceCompat.apply(editor);
     }
 
 
     /**
-     * 获取boolean类型值
-     *
-     * @param context  上下文对象
-     * @param name
-     * @param key
-     * @param defValue 默认值
-     * @return key对应的value
-     */
-    public static boolean getBoolean(Context context, String name, String key, boolean defValue) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getBoolean(key, defValue);
-    }
-
-    public static boolean getBoolean(Context context, String name, String key) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getBoolean(key, DEFAULT_BOOL_VALUE);
-    }
-
-    public static boolean getBoolean(Context context, String key, boolean defValue) {
-        return getBoolean(context, context.getPackageName(), key, defValue);
-    }
-
-    public static boolean getBoolean(Context context, String key) {
-        return getBoolean(context, context.getPackageName(), key, DEFAULT_BOOL_VALUE);
-    }
-
-
-    /**
-     * 保存float类型数据
+     * 查询某个key是否存在
      *
      * @param context
-     * @param name
      * @param key
-     * @param value
      * @return
      */
-    public static boolean putFloat(Context context, String name, String key, float value) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putFloat(key, value);
-        return editor.commit();
+    public static boolean contains(Context context, String key) {
+        SharedPreferences sharePrefernecr = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        return sharePrefernecr.contains(key);
     }
-
-    public static boolean putFloat(Context context, String key, float value) {
-        return putFloat(context, context.getPackageName(), key, value);
-    }
-
 
     /**
-     * 获取boolean类型值
-     *
-     * @param context  上下文对象
-     * @param name
-     * @param key
-     * @param defValue 默认值
-     * @return key对应的value
-     */
-    public static float getFloat(Context context, String name, String key, float defValue) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getFloat(key, defValue);
-    }
-
-    public static float getFloat(Context context, String name, String key) {
-        return getFloat(context, name, key, DEFAULT_FLOAT_VALUE);
-    }
-
-    public static float getFloat(Context context, String key, float defValue) {
-        return getFloat(context, context.getPackageName(), key, defValue);
-    }
-
-    public static float getFloat(Context context, String key) {
-        return getFloat(context, context.getPackageName(), key, DEFAULT_FLOAT_VALUE);
-    }
-
-
-    /**
-     * 保存long类型数据
+     * 返回所有的键值对
      *
      * @param context
-     * @param name
-     * @param key
-     * @param value
      * @return
      */
-    public static boolean putLong(Context context, String name, String key, long value) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putLong(key, value);
-        return editor.commit();
-    }
-
-    public static boolean putLong(Context context, String key, long value) {
-        return putLong(context, context.getPackageName(), key, value);
+    public static Map<String, ?> getAll(Context context) {
+        SharedPreferences sharePreference = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        return sharePreference.getAll();
     }
 
 
-    /**
-     * 获取boolean类型值
-     *
-     * @param context  上下文对象
-     * @param name
-     * @param key
-     * @param defValue 默认值
-     * @return key对应的value
-     */
-    public static long getLong(Context context, String name, String key, long defValue) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.getLong(key, defValue);
+    private static class SharedPreferenceCompat {
+
+        private static final Method mApplyMethod = findApplyMethod();
+
+        /**
+         * 反射查找apply方法
+         *
+         * @return
+         */
+        private static Method findApplyMethod() {
+            try {
+                Class clazz = SharedPreferences.Editor.class;
+                return clazz.getMethod("apply");
+            } catch (NoSuchMethodException e) {
+            }
+            return null;
+        }
+
+        public static void apply(SharedPreferences.Editor editor) {
+            try {
+                if (mApplyMethod != null) {
+                    mApplyMethod.invoke(editor);
+                    return;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            editor.commit();
+        }
     }
 
-    public static long getLong(Context context, String name, String key) {
-        return getLong(context, name, key, DEFAULT_LONG_VALUE);
-    }
-
-    public static long getLong(Context context, String key, long defValue) {
-        return getLong(context, context.getPackageName(), key, defValue);
-    }
-
-    public static long getLong(Context context, String key) {
-        return getLong(context, context.getPackageName(), key, DEFAULT_LONG_VALUE);
-    }
-
-
-    /**
-     * 清除保存的数据
-     *
-     * @param context
-     * @param name    保存的名字
-     * @return
-     */
-    public static boolean clearData(Context context, String name) {
-        SharedPreferences sp = getSP(context, name, Context.MODE_PRIVATE);
-        return sp.edit().clear().commit();
-    }
-
-    public static boolean clearData(Context context) {
-        return clearData(context, context.getPackageName());
-    }
 }

@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CustomerView" />
             <option value="$PROJECT_DIR$/FragmentTabHost" />
             <option value="$PROJECT_DIR$/HttpUtils" />
             <option value="$PROJECT_DIR$/ListViewAdapter" />

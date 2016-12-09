@@ -7,11 +7,17 @@ import android.view.View;
 
 import com.luxshare.textokhttp.okGo.OkGoHelper;
 import com.luxshare.textokhttp.okGo.callback.JsonDialogCallBack;
+import com.luxshare.textokhttp.okGo.callback.StringDialogCallBack;
 import com.luxshare.textokhttp.okHttp.LoadingCallBack;
 import com.luxshare.textokhttp.okHttp.OkHttpHelper;
 import com.luxshare.textokhttp.test.DownLoadAct;
 import com.luxshare.textokhttp.test.PersonBean;
 import com.luxshare.textokhttp.test.Test;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -43,6 +49,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static <T> T bindModel(String content, Class<T> cls) {
+        try {
+            JSONObject mjson = new JSONObject(content);
+            try {
+                T instance = cls.newInstance();
+                Iterator it = mjson.keys();
+                while (it.hasNext()) {
+                    String next = it.next().toString();
+                    ModelReflector.setProperty(instance, next, mjson.get(next)
+                            .toString());
+                }
+                return instance;
+            } catch (IllegalAccessException e) {
+            } catch (InstantiationException e) {
+            }
+        } catch (JSONException e) {
+        }
+        return null;
+    }
+
 
     public void getBtnClick1(View view) {
 

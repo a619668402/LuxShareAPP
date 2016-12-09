@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CustomerView/CustomerView.iml" filepath="$PROJECT_DIR$/CustomerView/CustomerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/FragmentTabHost/FragmentTabHost.iml" filepath="$PROJECT_DIR$/FragmentTabHost/FragmentTabHost.iml" />
       <module fileurl="file://$PROJECT_DIR$/HttpUtils/HttpUtils.iml" filepath="$PROJECT_DIR$/HttpUtils/HttpUtils.iml" />
       <module fileurl="file://$PROJECT_DIR$/ListViewAdapter/ListViewAdapter.iml" filepath="$PROJECT_DIR$/ListViewAdapter/ListViewAdapter.iml" />

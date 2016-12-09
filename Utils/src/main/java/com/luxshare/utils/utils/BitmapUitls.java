@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -155,7 +156,15 @@ public class BitmapUitls {
         }
     }
 
-
+    /**
+     * 将图片从本地读到内存的时候进行压缩,即图片从file形式转换为bitmap形式
+     * 特点:通过设置采样率.减少图片的像素,达到对内存中的bitmap进行压缩
+     *
+     * @param filePath  文件路径
+     * @param pixWidth
+     * @param pixHeight
+     * @return
+     */
     public static Bitmap compressImageFromFile(String filePath, float pixWidth, float pixHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true; // 只读边,不读内容
@@ -181,5 +190,38 @@ public class BitmapUitls {
 
         bitmap = BitmapFactory.decodeFile(filePath, options);
         return bitmap;
+    }
+
+    /**
+     * 计算缩放比例
+     *
+     * @param options
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
+    public static int caculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSimpleSize = 1;
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqWidth);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+            // 计算缩放比例
+            inSimpleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSimpleSize;
+    }
+
+
+    public static Bitmap decodeSampleBitmapFromSD(String filePath, int width, int height) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        // 表示解析图片的时候，只解析长度和宽度，不载入图片，这样就节省内存开支。
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        options.inSampleSize = caculateInSampleSize(options, width, height);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(filePath, options);
     }
 }
