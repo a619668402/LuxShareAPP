@@ -167,10 +167,9 @@ public class BitmapUitls {
      */
     public static Bitmap compressImageFromFile(String filePath, float pixWidth, float pixHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true; // 只读边,不读内容
+        options.inJustDecodeBounds = true; // 只读边,不读内容,不会分配内存
         Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
 
-        options.inJustDecodeBounds = false;
         int w = options.outWidth;
         int h = options.outHeight;
         int scale = 1;
@@ -187,7 +186,7 @@ public class BitmapUitls {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;// 该模式是默认的,可以不设置
         options.inPurgeable = true; // 同时设置才会有效
         options.inInputShareable = true; // 当系统内存不够时候图片会自动被回收
-
+        options.inJustDecodeBounds = false;
         bitmap = BitmapFactory.decodeFile(filePath, options);
         return bitmap;
     }
@@ -214,6 +213,13 @@ public class BitmapUitls {
     }
 
 
+    /**
+     * 获取根据宽高压缩后的bitmap
+     * @param filePath
+     * @param width
+     * @param height
+     * @return
+     */
     public static Bitmap decodeSampleBitmapFromSD(String filePath, int width, int height) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         // 表示解析图片的时候，只解析长度和宽度，不载入图片，这样就节省内存开支。
